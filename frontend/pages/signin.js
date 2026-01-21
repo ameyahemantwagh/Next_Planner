@@ -22,7 +22,6 @@ export default function SignIn(){
     const data = await res.json()
     setLoading(false)
     if(res.ok){
-      // store access token in memory / simple demo: localStorage
       localStorage.setItem('access_token', data.access_token)
       Router.push('/')
     } else {
@@ -31,25 +30,33 @@ export default function SignIn(){
   }
 
   return (
-    <div style={{padding:20}}>
-      <h2>Sign In</h2>
+    <div className="container">
+      <h2>Next Planner</h2>
+
+      <div className="social-row">
+        <a href={`${API}/api/auth/oauth/google`} className="oauth-link google">Google</a>
+        <a href={`${API}/api/auth/oauth/microsoft`} className="oauth-link microsoft">Microsoft</a>
+        <a href={`${API}/api/auth/oauth/github`} className="oauth-link github">GitHub</a>
+      </div>
+
       <form onSubmit={submit}>
-        <div>
-          <label>Email</label><br/>
-          <input value={email} onChange={e=>setEmail(e.target.value)} />
+        <div className="mt-8">
+          <label>Email</label>
+          <input type="email" required value={email} onChange={e=>setEmail(e.target.value)} />
         </div>
-        <div>
-          <label>Password</label><br/>
-          <input type="password" value={password} onChange={e=>setPassword(e.target.value)} />
+
+        <div className="mt-8">
+          <label>Password</label>
+          <input type="password" required value={password} onChange={e=>setPassword(e.target.value)} />
         </div>
-        <div style={{marginTop:10}}>
-          <button disabled={loading}>{loading? 'Please wait...':'Sign In'}</button>
+
+        <div className="mt-12 btn-row">
+          <button type="submit" disabled={loading} className="btn-full">{loading? 'Please wait...':'Sign In'}</button>
+          <a href="/" className="btn-full">Sign Up</a>
         </div>
       </form>
-      {msg && <p>{msg}</p>}
-      <div style={{marginTop:10}}>
-        <a href="/forgot-password">Forgot password?</a>
-      </div>
+
+      {msg && <p className="msg">{msg}</p>}
     </div>
   )
 }

@@ -3,10 +3,23 @@
   --bg-gradient: linear-gradient(to top, #feffff, #def2f1);
   --bg: rgba(58, 175, 169, 0.15);
   --bg-color-fallback: #def2f1;
+  --bg-button: #85d7d3;
+  --bg-container: #3AAFA9;
+  --bg-container-active: #2B7A78;
+  --text-container-active: #feffff;
+  --text-container: #def2f1;
 }
 
 html, body, #__next {
   height: 100%;
+}
+
+/* Center the app container vertically and horizontally */
+#__next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
 }
 
 body {
@@ -24,19 +37,20 @@ a {
   text-decoration: none;
 }
 
-input, textarea, select, button {
+input, textarea, select {
   color: inherit;
   font: inherit;
   border: 1px solid rgba(0,70,70,0.15);
   background: rgba(255,255,255,0.8);
   padding: 8px;
-  border-radius: 4px;
+  border-radius: 8px;
   box-sizing: border-box;
+  width: 100%;
 }
 
 button {
-  background: var(--text-color);
-  color: #ffffff;
+  background: var(--bg-container);
+  color: var(--text-container);
   border: none;
   cursor: pointer;
 }
@@ -44,9 +58,76 @@ button {
 label {
   color: var(--text-color);
   font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
 }
 
 .container {
-  padding: 16px;
+  padding: 24px;
+  max-width: 480px;
+  margin: 0;
   background: var(--bg);
+  border-radius: 8px;
 }
+
+.container h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.social-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.oauth-link {
+  flex: 1;
+  padding: 10px;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.oauth-link.google { background: #dd4b39; }
+.oauth-link.microsoft { background: #2F2F8A; }
+.oauth-link.github { background: #24292e; }
+
+.form-row { display: flex; gap: 8px; }
+.form-col { flex: 1; }
+
+.mt-8 { margin-top: 6px; }
+.mt-12 { margin-top: 12px; }
+
+.btn-row { display: flex; gap: 8px; }
+
+/* Make each button in the row share available width */
+.btn-row .btn-full { flex: 1; }
+
+.btn-full {
+  padding: 10px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font: inherit;
+  background: var(--bg-container);
+  color: var(--text-container);
+  border: none;
+  cursor: pointer;
+}
+
+/* Hover + focus: use active colors */
+.btn-full:hover,
+.btn-full:focus {
+  background: var(--bg-container-active);
+  color: var(--text-container-active);
+  outline: none;
+}
+
+/* utility to make a single button span full width */
+.btn-full.block { width: 100%; }
+
+.msg { margin-top: 12px; }

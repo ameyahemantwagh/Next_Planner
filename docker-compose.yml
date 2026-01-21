@@ -30,6 +30,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: Next-Planner-Backend
+    restart: always
     env_file:
       - ./.env
     environment:
@@ -52,6 +53,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: Next-Planner-Frontend
+    restart: always
     env_file:
       - ./.env
     environment:
