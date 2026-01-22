@@ -13,13 +13,28 @@ export default function SignIn(){
     e.preventDefault()
     setLoading(true)
     setMsg(null)
-    const res = await fetch(`${API}/api/auth/signin`, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({email,password}),
-      credentials: 'include'
-    })
-    const data = await res.json()
+    let res, data
+    try {
+      res = await fetch(`${API}/api/auth/signin`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({email,password}),
+        credentials: 'include'
+      })
+    } catch (err) {
+      setLoading(false)
+      setMsg('Network error: ' + (err.message || 'Failed to reach server'))
+      return
+    }
+
+    try {
+      data = await res.json()
+    } catch (err) {
+      setLoading(false)
+      setMsg('Invalid server response')
+      return
+    }
+
     setLoading(false)
     if(res.ok){
       localStorage.setItem('access_token', data.access_token)
@@ -50,13 +65,13 @@ export default function SignIn(){
           <input type="password" required value={password} onChange={e=>setPassword(e.target.value)} />
         </div>
 
-        <div className="mt-12 btn-row">
-          <button type="submit" disabled={loading} className="btn-full">{loading? 'Please wait...':'Sign In'}</button>
-          <a href="/" className="btn-full">Sign Up</a>
+        <div className="mt-12">
+          <button type="submit" disabled={loading} className="btn-full block">{loading? 'Please wait...':'Sign In'}</button>
         </div>
       </form>
 
       {msg && <p className="msg">{msg}</p>}
+      <p className="mt-8 text-center">Do not have an account? <a href="/">Sign Up</a></p>
     </div>
   )
 }

@@ -1,16 +1,18 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
 from .database import engine, Base
 from . import models
 from .auth import router as auth_router
 
 app = FastAPI(title="Auth Prototype")
 
+frontend_origins = [os.getenv("FRONTEND_URL", "http://localhost:9005")]
+
 app.add_middleware(
     CORSMiddleware,
-    # In development allow the frontend dev server and other local origins.
-    # Use a permissive setting here so the containerized frontend can reach the API.
-    allow_origins=["*"],
+    # Allow only the configured frontend origin when credentials are included.
+    allow_origins=frontend_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

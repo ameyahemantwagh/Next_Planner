@@ -60,13 +60,13 @@ export default function SignUp(){
           <input type="password" required value={password} onChange={e=>setPassword(e.target.value)} />
         </div>
 
-        <div className="mt-12 btn-row">
-          <button type="submit" disabled={loading} className="btn-full">{loading? 'Please wait...':'Sign Up'}</button>
-          <a href="/signin" className="btn-full">Sign In</a>
+        <div className="mt-12">
+          <button disabled={loading} className="btn-full">{loading? 'Please wait...':'Sign Up'}</button>
         </div>
       </form>
 
       {msg && <p className="msg">{msg}</p>}
+      <p className="mt-8 text-center">Already have an account? <a href="/signin">Login</a></p>
     </div>
   )
 }

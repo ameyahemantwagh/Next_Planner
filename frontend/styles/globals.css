@@ -63,7 +63,7 @@ label {
 }
 
 .container {
-  padding: 24px;
+  padding: 15px;
   max-width: 480px;
   margin: 0;
   background: var(--bg);
@@ -73,6 +73,8 @@ label {
 .container h2 {
   margin-top: 0;
   text-align: center;
+  width: 480px;
+  max-width: 480px;
 }
 
 .social-row {
@@ -100,34 +102,17 @@ label {
 .mt-8 { margin-top: 6px; }
 .mt-12 { margin-top: 12px; }
 
-.btn-row { display: flex; gap: 8px; }
+/* text alignment utilities */
+.text-center { text-align: center; }
 
-/* Make each button in the row share available width */
-.btn-row .btn-full { flex: 1; }
+/* specific spacing override for centered small-top-margin elements */
+.mt-8.text-center { margin-top: 15px; margin-bottom: 6px; }
 
-.btn-full {
-  padding: 10px;
+.btn-full { 
+  width: 100%; 
+  padding: 10px; 
   border-radius: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
   font: inherit;
-  background: var(--bg-container);
-  color: var(--text-container);
-  border: none;
-  cursor: pointer;
 }
 
-/* Hover + focus: use active colors */
-.btn-full:hover,
-.btn-full:focus {
-  background: var(--bg-container-active);
-  color: var(--text-container-active);
-  outline: none;
-}
-
-/* utility to make a single button span full width */
-.btn-full.block { width: 100%; }
-
-.msg { margin-top: 12px; }
+.msg { margin-top: 12px; text-align: center; }
