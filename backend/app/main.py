@@ -1,9 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import asyncio
 from .database import engine, Base
 from . import models
 from .auth import router as auth_router
+from .planner_routes import router as planner_router
+from .websockets import websocket_endpoint, redis_subscriber
 
 app = FastAPI(title="Auth Prototype")
 
@@ -19,14 +22,25 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
+app.include_router(planner_router)
 
 @app.on_event("startup")
-def startup():
+async def startup():
     Base.metadata.create_all(bind=engine)
+    try:
+        loop = asyncio.get_event_loop()
+        loop.create_task(redis_subscriber(loop))
+    except Exception:
+        pass
 
 @app.get("/")
 def root():
     return {"status": "ok"}
+
+
+@app.websocket("/ws")
+async def ws_route(websocket: WebSocket):
+    await websocket_endpoint(websocket)
 
 
 @app.middleware("http")

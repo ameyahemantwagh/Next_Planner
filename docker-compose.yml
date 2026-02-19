@@ -71,6 +71,28 @@ services:
       - frontend-node-modules:/usr/src/app/node_modules
     working_dir: /usr/src/app
 
+  ci:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: Next-Planner-CI
+    restart: "no"
+    env_file:
+      - ./.env
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
+      BACKEND_PORT: ${BACKEND_PORT}
+      PYTHONUNBUFFERED: ${PYTHONUNBUFFERED}
+    depends_on:
+      - db
+      - redis
+    # one-off command suitable for CI: run an import/smoke test and exit
+    command: ["sh", "-c", "python -c \"import importlib,sys; importlib.import_module('app.main'); print('IMPORT_OK')\""]
+    working_dir: /app
+    volumes:
+      - ./backend:/app:ro
+
 volumes:
   db-data:
   redis-data:

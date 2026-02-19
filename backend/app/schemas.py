@@ -38,3 +38,36 @@ class RevokeSessionRequest(BaseModel):
 
 class TrialRequest(BaseModel):
     email: EmailStr
+
+
+# Planner-specific schemas
+class PlanOut(BaseModel):
+    id: str
+    name: str
+    visibility: Optional[str]
+
+
+class BucketOut(BaseModel):
+    id: str
+    title: str
+    order_hint: str
+
+
+class TaskOut(BaseModel):
+    id: str
+    title: str
+    bucket_id: Optional[str]
+    order_hint: str
+    percent_complete: Optional[int] = 0
+
+
+class CommentOut(BaseModel):
+    id: str
+    body: str
+    created_at: Optional[str]
+
+
+class MembershipOut(BaseModel):
+    id: str
+    user_id: str
+    role: str
